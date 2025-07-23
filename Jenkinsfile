@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo "Building the Docker image..."
                 // We build the image once and will reuse it for testing and deploying
-                sh "docker build -t ${DOCK организма}:${env.BUILD_NUMBER} ."
+                sh "docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} ."
             }
         }
 
@@ -28,7 +28,7 @@ pipeline {
                 // This command starts a temporary container from the image we just built.
                 // It overrides the default command and instead runs 'npm test'.
                 // If the tests fail, this command will error out and stop the pipeline.
-                sh "docker run --rm ${DOCK_IMAGE_NAME}:${env.BUILD_NUMBER} npm test"
+                sh "docker run --rm ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} npm test"
             }
         }
 
